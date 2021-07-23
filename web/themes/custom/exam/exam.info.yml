@@ -10,8 +10,6 @@ libraries:
   - exam/global-styling
 
 regions:
-  top_header: 'Top header'
-  top_header_form: 'Top header form'
   header: Header
   header_form: 'Header form'
   primary_menu: 'Primary menu'
@@ -27,11 +25,7 @@ regions:
   featured_bottom_first: 'Featured bottom first'
   featured_bottom_second: 'Featured bottom second'
   featured_bottom_third: 'Featured bottom third'
-  footer_first: 'Footer first'
-  footer_second: 'Footer second'
-  footer_third: 'Footer third'
-  footer_fourth: 'Footer fourth'
-  footer_fifth: 'Footer fifth'
+  footer_fifth: 'Footer'
 
 # Information added by Drupal.org packaging script on 2021-07-18
 version: '5.5.2'

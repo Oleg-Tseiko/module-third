@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * Variable insertion into twig themes.
+ */
+
+/**
+ * Connecting module to twig template.
+ */
+function anzy_theme($existing, $type, $theme, $path) {
+  return [
+    'Report_template' => [
+      'variables' => ['form' => [], 'items' => [], 'dest' => ''],
+    ],
+  ];
+}

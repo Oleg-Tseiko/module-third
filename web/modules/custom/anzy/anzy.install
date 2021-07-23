@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Installing db table with report string.
+ */
+
+/**
+ * Schema function for report fields.
+ */
+function anzy_schema() {
+  $schema['anzy'] = [
+    'description' => 'Stores report info.',
+    'fields' => [
+      'id' => [
+        'description' => 'The primary identifier for db entry.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'report' => [
+        'description' => "report calendar info.",
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => FALSE,
+        'default' => '',
+      ],
+      'reptable' => [
+        'description' => "Logic that contain id for what table report year is selected.",
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'year' => [
+        'description' => "Year field that report is based for.",
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 2021,
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+  return $schema;
+}
