@@ -1,1 +1,6 @@
-
+anzy.calendar_form:
+  path: '/anzy/report'
+  defaults:
+    _form: '\Drupal\anzy\Form\CalendarForm'
+  requirements:
+   _permission: 'administer nodes'
