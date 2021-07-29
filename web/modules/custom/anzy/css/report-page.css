@@ -1,6 +1,9 @@
 .table {
   margin-bottom: 0!important;
 }
+.alert {
+  margin-top: 1rem;
+}
 fieldset {
   width: 72px;
   margin-bottom: 0!important;
@@ -11,10 +14,16 @@ fieldset input:hover,
 fieldset input:focus,
 fieldset input:active {
   box-shadow: none!important;
-  border: 1px solid #ced4da!important;
 }
 .form-control {
   border-radius: 0!important;
+  border-bottom: 1px solid #757575!important;
+  border-left: 1px solid #757575!important;
+  border-right: none!important;
+  border-top: none!important;
+}
+fieldset:nth-of-type(18) .form-control:disabled {
+  border-right: 1px solid #757575!important;
 }
 .btn-primary {
   margin-bottom: 15px;
@@ -34,4 +43,15 @@ table tr th:nth-of-type(13),
 table tr th:nth-of-type(17),
 table tr th:nth-of-type(18) {
   background-color: #e9ecef!important;
+}
+/* Chrome, Safari, Edge, Opera */
+fieldset input::-webkit-outer-spin-button,
+fieldset input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+fieldset input[type=number] {
+  -moz-appearance: textfield;
 }
