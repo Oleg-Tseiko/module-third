@@ -1,0 +1,6 @@
+anzy.admin_settings:
+  title: 'Monthly report'
+  description: 'Report on year efficiency'
+  parent: system.admin_structure
+  route_name: anzy.calendar_form
+  weight: 10
