@@ -1,0 +1,37 @@
+.table {
+  margin-bottom: 0!important;
+}
+fieldset {
+  width: 72px;
+  margin-bottom: 0!important;
+  float: left;
+}
+fieldset input,
+fieldset input:hover,
+fieldset input:focus,
+fieldset input:active {
+  box-shadow: none!important;
+  border: 1px solid #ced4da!important;
+}
+.form-control {
+  border-radius: 0!important;
+}
+.btn-primary {
+  margin-bottom: 15px;
+}
+table tr th {
+  background: #757575;
+  background: rgba(0, 0, 0, 0.51);
+  width: 73px;
+  border: 1px solid #757575;
+  background-color: #fff!important;
+  color: #343a40!important;
+}
+table tr th:nth-of-type(1),
+table tr th:nth-of-type(5),
+table tr th:nth-of-type(9),
+table tr th:nth-of-type(13),
+table tr th:nth-of-type(17),
+table tr th:nth-of-type(18) {
+  background-color: #e9ecef!important;
+}

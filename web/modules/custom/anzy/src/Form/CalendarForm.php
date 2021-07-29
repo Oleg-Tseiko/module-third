@@ -62,6 +62,35 @@ class CalendarForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $def = $this->load();
+    $headers = [
+      t('Year'),
+      t('Jan'),
+      t('Feb'),
+      t('Mar'),
+      t('Q1'),
+      t('Apr'),
+      t('May'),
+      t('Jun'),
+      t('Q2'),
+      t('Jul'),
+      t('Aug'),
+      t('Sep'),
+      t('Q3'),
+      t('Oct'),
+      t('Nov'),
+      t('Dec'),
+      t('Q4'),
+      t('YTD'),
+    ];
+    $form['table'] = [
+      '#type' => 'table',
+      '#header' => $headers,
+    ];
+    $form['Year'] = [
+      '#type' => 'number',
+      '#value' => 2021,
+      '#disabled' => TRUE,
+    ];
     $form['Jan'] = [
       '#type' => 'number',
       '#default_value' => $def[0]['jan'] == 0 ? '' : $def[0]['jan'],
@@ -140,6 +169,7 @@ class CalendarForm extends FormBase {
       '#value' => $this->t('Add'),
       '#description' => $this->t('Submit, #type = submit'),
     ];
+    $form['#attached']['library'][] = 'anzy/my-lib';
     return $form;
   }
 
