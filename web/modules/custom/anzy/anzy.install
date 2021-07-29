@@ -12,18 +12,83 @@ function anzy_schema() {
   $schema['anzy'] = [
     'description' => 'Stores report info.',
     'fields' => [
+      'jan' => [
+        'description' => "January month report.",
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'feb' => [
+        'description' => "February month report.",
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'mar' => [
+        'description' => "March month report.",
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'apr' => [
+        'description' => "April month report.",
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'may' => [
+        'description' => "May month report.",
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'jun' => [
+        'description' => "June month report.",
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'jul' => [
+        'description' => "Jule month report.",
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'aug' => [
+        'description' => "August month report.",
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'sep' => [
+        'description' => "September month report.",
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'oct' => [
+        'description' => "October month report.",
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'nov' => [
+        'description' => "November month report.",
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'dec' => [
+        'description' => "December month report.",
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
       'id' => [
         'description' => 'The primary identifier for db entry.',
         'type' => 'serial',
         'unsigned' => TRUE,
         'not null' => TRUE,
-      ],
-      'report' => [
-        'description' => "report calendar info.",
-        'type' => 'varchar',
-        'length' => 64,
-        'not null' => FALSE,
-        'default' => '',
       ],
       'reptable' => [
         'description' => "Logic that contain id for what table report year is selected.",
