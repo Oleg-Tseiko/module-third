@@ -22,6 +22,9 @@ fieldset input:active {
   border-right: none!important;
   border-top: none!important;
 }
+fieldset:nth-of-type(1) .form-control:disabled {
+  background-color: #fff;
+}
 fieldset:nth-of-type(18) .form-control:disabled {
   border-right: 1px solid #757575!important;
 }
@@ -31,18 +34,23 @@ fieldset:nth-of-type(18) .form-control:disabled {
 table tr th {
   background: #757575;
   background: rgba(0, 0, 0, 0.51);
-  width: 73px;
+  width: 72px;
+  display: block;
+  float: left;
   border: 1px solid #757575;
+  border-right: none;
   background-color: #fff!important;
   color: #343a40!important;
 }
-table tr th:nth-of-type(1),
 table tr th:nth-of-type(5),
 table tr th:nth-of-type(9),
 table tr th:nth-of-type(13),
 table tr th:nth-of-type(17),
 table tr th:nth-of-type(18) {
   background-color: #e9ecef!important;
+}
+table tr th:nth-of-type(18) {
+  border-right: 1px solid #757575;
 }
 /* Chrome, Safari, Edge, Opera */
 fieldset input::-webkit-outer-spin-button,
