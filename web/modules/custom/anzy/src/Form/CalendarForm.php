@@ -100,27 +100,31 @@ class CalendarForm extends FormBase {
       t('Q4'),
       t('YTD'),
     ];
-    $form['table'] = [
+    $form['wrapper'] = [
+      '#type' => 'container',
+      '#attributes' => ['id' => 'data-wrapper'],
+    ];
+    $form['wrapper']['table'] = [
       '#type' => 'table',
       '#header' => $headers,
     ];
     for ($i = count($def) - 1; $i != -1; $i--) {
-      $form[$i]['Year'] = [
+      $form['wrapper'][$i]['Year'] = [
         '#type' => 'number',
         '#value' => $i == 0 ? date('Y', time()) : $def[$i]['year'],
         '#disabled' => TRUE,
         '#attributes' => ['class' => ['firstField']],
       ];
-      $form[$i]['Jan'] = [
+      $form['wrapper'][$i]['Jan'] = [
         '#type' => 'number',
         '#default_value' => $def[$i]['jan'] == 0 ? '' : $def[$i]['jan'],
         '#size' => 9999,
       ];
-      $form[$i]['Feb'] = [
+      $form['wrapper'][$i]['Feb'] = [
         '#type' => 'number',
         '#default_value' => $def[$i]['feb'] == 0 ? '' : $def[$i]['feb'],
       ];
-      $form[$i]['Mar'] = [
+      $form['wrapper'][$i]['Mar'] = [
         '#type' => 'number',
         '#default_value' => $def[$i]['mar'] == 0 ? '' : $def[$i]['mar'],
       ];
@@ -129,20 +133,20 @@ class CalendarForm extends FormBase {
         $def[$i]['feb'] == NULL ? 0 : round($def[$i]['feb'], 2),
         $def[$i]['mar'] == NULL ? 0 : round($def[$i]['mar'], 2),
       ];
-      $form[$i]['Qfirst'] = [
+      $form['wrapper'][$i]['Qfirst'] = [
         '#type' => 'textfield',
         '#value' => $fQuarter[0] == 0 && $fQuarter[1] == 0 && $fQuarter[2] == 0 ? "" : round((($fQuarter[0] + $fQuarter[1] + $fQuarter[2]) + 1) / 3, 2),
         '#disabled' => TRUE,
       ];
-      $form[$i]['Apr'] = [
+      $form['wrapper'][$i]['Apr'] = [
         '#type' => 'number',
         '#default_value' => $def[$i]['apr'] == 0 ? '' : $def[$i]['apr'],
       ];
-      $form[$i]['May'] = [
+      $form['wrapper'][$i]['May'] = [
         '#type' => 'number',
         '#default_value' => $def[$i]['may'] == 0 ? '' : $def[$i]['may'],
       ];
-      $form[$i]['Jun'] = [
+      $form['wrapper'][$i]['Jun'] = [
         '#type' => 'number',
         '#default_value' => $def[$i]['jun'] == 0 ? '' : $def[$i]['jun'],
       ];
@@ -151,20 +155,20 @@ class CalendarForm extends FormBase {
         $def[$i]['jun'] == NULL ? 0 : round($def[$i]['jun'], 2),
         $def[$i]['may'] == NULL ? 0 : round($def[$i]['may'], 2),
       ];
-      $form[$i]['Qsecond'] = [
+      $form['wrapper'][$i]['Qsecond'] = [
         '#type' => 'textfield',
         '#value' => $sQuarter[0] == 0 && $sQuarter[1] == 0 && $sQuarter[2] == 0 ? "" : round((($sQuarter[0] + $sQuarter[1] + $sQuarter[2]) + 1) / 3, 2),
         '#disabled' => TRUE,
       ];
-      $form[$i]['Jul'] = [
+      $form['wrapper'][$i]['Jul'] = [
         '#type' => 'number',
         '#default_value' => $def[$i]['jul'] == 0 ? '' : $def[$i]['jul'],
       ];
-      $form[$i]['Aug'] = [
+      $form['wrapper'][$i]['Aug'] = [
         '#type' => 'number',
         '#default_value' => $def[$i]['aug'] == 0 ? '' : $def[$i]['aug'],
       ];
-      $form[$i]['Sep'] = [
+      $form['wrapper'][$i]['Sep'] = [
         '#type' => 'number',
         '#default_value' => $def[$i]['sep'] == 0 ? '' : $def[$i]['sep'],
       ];
@@ -173,20 +177,20 @@ class CalendarForm extends FormBase {
         $def[$i]['aug'] == NULL ? 0 : round($def[$i]['aug'], 2),
         $def[$i]['sep'] == NULL ? 0 : round($def[$i]['sep'], 2),
       ];
-      $form[$i]['Qthird'] = [
+      $form['wrapper'][$i]['Qthird'] = [
         '#type' => 'textfield',
         '#value' => $tQuarter[0] == 0 && $tQuarter[1] == 0 && $tQuarter[2] == 0 ? "" : round((($tQuarter[0] + $tQuarter[1] + $tQuarter[2]) + 1) / 3, 2),
         '#disabled' => TRUE,
       ];
-      $form[$i]['Oct'] = [
+      $form['wrapper'][$i]['Oct'] = [
         '#type' => 'number',
         '#default_value' => $def[$i]['oct'] == 0 ? '' : $def[$i]['oct'],
       ];
-      $form[$i]['Nov'] = [
+      $form['wrapper'][$i]['Nov'] = [
         '#type' => 'number',
         '#default_value' => $def[$i]['nov'] == 0 ? '' : $def[$i]['nov'],
       ];
-      $form[$i]['Dec'] = [
+      $form['wrapper'][$i]['Dec'] = [
         '#type' => 'number',
         '#default_value' => $def[$i]['dec'] == 0 ? '' : $def[$i]['dec'],
       ];
@@ -195,36 +199,32 @@ class CalendarForm extends FormBase {
         $def[$i]['nov'] == NULL ? 0 : round($def[$i]['nov'], 2),
         $def[$i]['dec'] == NULL ? 0 : round($def[$i]['dec'], 2),
       ];
-      $form[$i]['Qfourth'] = [
+      $form['wrapper'][$i]['Qfourth'] = [
         '#type' => 'textfield',
         '#value' => $fQuarter[0] == 0 && $fQuarter[1] == 0 && $fQuarter[2] == 0 ? "" : round((($fQuarter[0] + $fQuarter[1] + $fQuarter[2]) + 1) / 3, 2),
         '#disabled' => TRUE,
       ];
       $yearly = [
-        $form[$i]["Qfirst"]['#value'] == "" ? 0 : round($form[$i]["Qfirst"]['#value'], 2),
-        $form[$i]["Qsecond"]['#value'] == "" ? 0 : round($form[$i]["Qsecond"]['#value'], 2),
-        $form[$i]["Qthird"]['#value'] == "" ? 0 : round($form[$i]["Qthird"]['#value'], 2),
-        $form[$i]["Qfourth"]['#value'] == "" ? 0 : round($form[$i]["Qfourth"]['#value'], 2),
+        $form['wrapper'][$i]["Qfirst"]['#value'] == "" ? 0 : round($form['wrapper'][$i]["Qfirst"]['#value'], 2),
+        $form['wrapper'][$i]["Qsecond"]['#value'] == "" ? 0 : round($form['wrapper'][$i]["Qsecond"]['#value'], 2),
+        $form['wrapper'][$i]["Qthird"]['#value'] == "" ? 0 : round($form['wrapper'][$i]["Qthird"]['#value'], 2),
+        $form['wrapper'][$i]["Qfourth"]['#value'] == "" ? 0 : round($form['wrapper'][$i]["Qfourth"]['#value'], 2),
       ];
-      $form[$i]['YTD'] = [
+      $form['wrapper'][$i]['YTD'] = [
         '#type' => 'textfield',
-        '#value' => $form[$i]['Qfirst']['#value'] == 0 && $form[$i]['Qsecond']['#value'] == 0 && $form[$i]['Qthird']['#value'] == 0 && $form[$i]['Qfourth']['#value'] == 0 ? "" : round((($yearly[0] + $yearly[1] + $yearly[2] + $yearly[3]) + 1) / 4, 2),
+        '#value' => $form['wrapper'][$i]['Qfirst']['#value'] == 0 && $form['wrapper'][$i]['Qsecond']['#value'] == 0 && $form['wrapper'][$i]['Qthird']['#value'] == 0 && $form['wrapper'][$i]['Qfourth']['#value'] == 0 ? "" : round((($yearly[0] + $yearly[1] + $yearly[2] + $yearly[3]) + 1) / 4, 2),
         '#disabled' => TRUE,
       ];
     }
-    $form['add'] = [
-      '#type' => 'button',
+    $form['wrapper']['add'] = [
+      '#type' => 'submit',
       '#value' => 'Add year',
       '#ajax' => [
         'callback' => '::addYear',
-        'event' => 'click',
-        'progress' => [
-          'type' => 'throbber',
-          'message' => t('Adding year'),
-        ],
+        'wrapper'    => 'data-wrapper',
       ],
     ];
-    $form['actions']['submit'] = [
+    $form['wrapper']['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Submit'),
       '#description' => $this->t('Submit, #type = submit'),
@@ -237,6 +237,7 @@ class CalendarForm extends FormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
+    $form_state->setRebuild(TRUE);
     $monthsVal = [
       'Jan' => $form_state->getValue('Jan'),
       'Feb' => $form_state->getValue('Feb'),
@@ -307,7 +308,7 @@ class CalendarForm extends FormBase {
         'year' => $year,
       ])
       ->execute();
-    return $response;
+    return $form['wrapper'];
   }
 
   /**
