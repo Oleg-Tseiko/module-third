@@ -61,6 +61,10 @@ class CalendarForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $form['system_messages'] = [
+      '#markup' => '<div id="form-system-messages"></div>',
+      '#weight' => -100,
+    ];
     $def = $this->load();
     if (empty($def)) {
       $def[0]['jan'] = 0;
@@ -100,113 +104,129 @@ class CalendarForm extends FormBase {
       '#type' => 'table',
       '#header' => $headers,
     ];
-    $form['Year'] = [
-      '#type' => 'number',
-      '#value' => 2021,
-      '#disabled' => TRUE,
-    ];
-    $form['Jan'] = [
-      '#type' => 'number',
-      '#default_value' => $def[0]['jan'] == 0 ? '' : $def[0]['jan'],
-    ];
-    $form['Feb'] = [
-      '#type' => 'number',
-      '#default_value' => $def[0]['feb'] == 0 ? '' : $def[0]['feb'],
-    ];
-    $form['Mar'] = [
-      '#type' => 'number',
-      '#default_value' => $def[0]['mar'] == 0 ? '' : $def[0]['mar'],
-    ];
-    $fQuarter = [
-      $def[0]['jan'] == NULL ? 0 : round($def[0]['jan'], 2),
-      $def[0]['feb'] == NULL ? 0 : round($def[0]['feb'], 2),
-      $def[0]['mar'] == NULL ? 0 : round($def[0]['mar'], 2),
-    ];
-    $form['Qfirst'] = [
-      '#type' => 'textfield',
-      '#value' => $fQuarter[0] == 0 && $fQuarter[1] == 0 && $fQuarter[2] == 0 ? "" : round((($fQuarter[0] + $fQuarter[1] + $fQuarter[2]) + 1) / 3, 2),
-      '#disabled' => TRUE,
-    ];
-    $form['Apr'] = [
-      '#type' => 'number',
-      '#default_value' => $def[0]['apr'] == 0 ? '' : $def[0]['apr'],
-    ];
-    $form['May'] = [
-      '#type' => 'number',
-      '#default_value' => $def[0]['may'] == 0 ? '' : $def[0]['may'],
-    ];
-    $form['Jun'] = [
-      '#type' => 'number',
-      '#default_value' => $def[0]['jun'] == 0 ? '' : $def[0]['jun'],
-    ];
-    $sQuarter = [
-      $def[0]['apr'] == NULL ? 0 : round($def[0]['apr'], 2),
-      $def[0]['jun'] == NULL ? 0 : round($def[0]['jun'], 2),
-      $def[0]['may'] == NULL ? 0 : round($def[0]['may'], 2),
-    ];
-    $form['Qsecond'] = [
-      '#type' => 'textfield',
-      '#value' => $sQuarter[0] == 0 && $sQuarter[1] == 0 && $sQuarter[2] == 0 ? "" : round((($sQuarter[0] + $sQuarter[1] + $sQuarter[2]) + 1) / 3, 2),
-      '#disabled' => TRUE,
-    ];
-    $form['Jul'] = [
-      '#type' => 'number',
-      '#default_value' => $def[0]['jul'] == 0 ? '' : $def[0]['jul'],
-    ];
-    $form['Aug'] = [
-      '#type' => 'number',
-      '#default_value' => $def[0]['aug'] == 0 ? '' : $def[0]['aug'],
-    ];
-    $form['Sep'] = [
-      '#type' => 'number',
-      '#default_value' => $def[0]['sep'] == 0 ? '' : $def[0]['sep'],
-    ];
-    $tQuarter = [
-      $def[0]['jul'] == NULL ? 0 : round($def[0]['jul'], 2),
-      $def[0]['aug'] == NULL ? 0 : round($def[0]['aug'], 2),
-      $def[0]['sep'] == NULL ? 0 : round($def[0]['sep'], 2),
-    ];
-    $form['Qthird'] = [
-      '#type' => 'textfield',
-      '#value' => $tQuarter[0] == 0 && $tQuarter[1] == 0 && $tQuarter[2] == 0 ? "" : round((($tQuarter[0] + $tQuarter[1] + $tQuarter[2]) + 1) / 3, 2),
-      '#disabled' => TRUE,
-    ];
-    $form['Oct'] = [
-      '#type' => 'number',
-      '#default_value' => $def[0]['oct'] == 0 ? '' : $def[0]['oct'],
-    ];
-    $form['Nov'] = [
-      '#type' => 'number',
-      '#default_value' => $def[0]['nov'] == 0 ? '' : $def[0]['nov'],
-    ];
-    $form['Dec'] = [
-      '#type' => 'number',
-      '#default_value' => $def[0]['dec'] == 0 ? '' : $def[0]['dec'],
-    ];
-    $fQuarter = [
-      $def[0]['oct'] == NULL ? 0 : round($def[0]['oct'], 2),
-      $def[0]['nov'] == NULL ? 0 : round($def[0]['nov'], 2),
-      $def[0]['dec'] == NULL ? 0 : round($def[0]['dec'], 2),
-    ];
-    $form['Qfourth'] = [
-      '#type' => 'textfield',
-      '#value' => $fQuarter[0] == 0 && $fQuarter[1] == 0 && $fQuarter[2] == 0 ? "" : round((($fQuarter[0] + $fQuarter[1] + $fQuarter[2]) + 1) / 3, 2),
-      '#disabled' => TRUE,
-    ];
-    $yearly = [
-      $form["Qfirst"]['#value'] == "" ? 0 : round($form["Qfirst"]['#value'], 2),
-      $form["Qsecond"]['#value'] == "" ? 0 : round($form["Qsecond"]['#value'], 2),
-      $form["Qthird"]['#value'] == "" ? 0 : round($form["Qthird"]['#value'], 2),
-      $form["Qfourth"]['#value'] == "" ? 0 : round($form["Qfourth"]['#value'], 2),
-    ];
-    $form['YTD'] = [
-      '#type' => 'textfield',
-      '#value' => $form['Qfirst']['#value'] == 0 && $form['Qsecond']['#value'] == 0 && $form['Qthird']['#value'] == 0 && $form['Qfourth']['#value'] == 0 ? "" : round((($yearly[0] + $yearly[1] + $yearly[2] + $yearly[3]) + 1) / 4, 2),
-      '#disabled' => TRUE,
+    for ($i = count($def) - 1; $i != -1; $i--) {
+      $form[$i]['Year'] = [
+        '#type' => 'number',
+        '#value' => $i == 0 ? date('Y', time()) : $def[$i]['year'],
+        '#disabled' => TRUE,
+        '#attributes' => ['class' => ['firstField']],
+      ];
+      $form[$i]['Jan'] = [
+        '#type' => 'number',
+        '#default_value' => $def[$i]['jan'] == 0 ? '' : $def[$i]['jan'],
+        '#size' => 9999,
+      ];
+      $form[$i]['Feb'] = [
+        '#type' => 'number',
+        '#default_value' => $def[$i]['feb'] == 0 ? '' : $def[$i]['feb'],
+      ];
+      $form[$i]['Mar'] = [
+        '#type' => 'number',
+        '#default_value' => $def[$i]['mar'] == 0 ? '' : $def[$i]['mar'],
+      ];
+      $fQuarter = [
+        $def[$i]['jan'] == NULL ? 0 : round($def[$i]['jan'], 2),
+        $def[$i]['feb'] == NULL ? 0 : round($def[$i]['feb'], 2),
+        $def[$i]['mar'] == NULL ? 0 : round($def[$i]['mar'], 2),
+      ];
+      $form[$i]['Qfirst'] = [
+        '#type' => 'textfield',
+        '#value' => $fQuarter[0] == 0 && $fQuarter[1] == 0 && $fQuarter[2] == 0 ? "" : round((($fQuarter[0] + $fQuarter[1] + $fQuarter[2]) + 1) / 3, 2),
+        '#disabled' => TRUE,
+      ];
+      $form[$i]['Apr'] = [
+        '#type' => 'number',
+        '#default_value' => $def[$i]['apr'] == 0 ? '' : $def[$i]['apr'],
+      ];
+      $form[$i]['May'] = [
+        '#type' => 'number',
+        '#default_value' => $def[$i]['may'] == 0 ? '' : $def[$i]['may'],
+      ];
+      $form[$i]['Jun'] = [
+        '#type' => 'number',
+        '#default_value' => $def[$i]['jun'] == 0 ? '' : $def[$i]['jun'],
+      ];
+      $sQuarter = [
+        $def[$i]['apr'] == NULL ? 0 : round($def[$i]['apr'], 2),
+        $def[$i]['jun'] == NULL ? 0 : round($def[$i]['jun'], 2),
+        $def[$i]['may'] == NULL ? 0 : round($def[$i]['may'], 2),
+      ];
+      $form[$i]['Qsecond'] = [
+        '#type' => 'textfield',
+        '#value' => $sQuarter[0] == 0 && $sQuarter[1] == 0 && $sQuarter[2] == 0 ? "" : round((($sQuarter[0] + $sQuarter[1] + $sQuarter[2]) + 1) / 3, 2),
+        '#disabled' => TRUE,
+      ];
+      $form[$i]['Jul'] = [
+        '#type' => 'number',
+        '#default_value' => $def[$i]['jul'] == 0 ? '' : $def[$i]['jul'],
+      ];
+      $form[$i]['Aug'] = [
+        '#type' => 'number',
+        '#default_value' => $def[$i]['aug'] == 0 ? '' : $def[$i]['aug'],
+      ];
+      $form[$i]['Sep'] = [
+        '#type' => 'number',
+        '#default_value' => $def[$i]['sep'] == 0 ? '' : $def[$i]['sep'],
+      ];
+      $tQuarter = [
+        $def[$i]['jul'] == NULL ? 0 : round($def[$i]['jul'], 2),
+        $def[$i]['aug'] == NULL ? 0 : round($def[$i]['aug'], 2),
+        $def[$i]['sep'] == NULL ? 0 : round($def[$i]['sep'], 2),
+      ];
+      $form[$i]['Qthird'] = [
+        '#type' => 'textfield',
+        '#value' => $tQuarter[0] == 0 && $tQuarter[1] == 0 && $tQuarter[2] == 0 ? "" : round((($tQuarter[0] + $tQuarter[1] + $tQuarter[2]) + 1) / 3, 2),
+        '#disabled' => TRUE,
+      ];
+      $form[$i]['Oct'] = [
+        '#type' => 'number',
+        '#default_value' => $def[$i]['oct'] == 0 ? '' : $def[$i]['oct'],
+      ];
+      $form[$i]['Nov'] = [
+        '#type' => 'number',
+        '#default_value' => $def[$i]['nov'] == 0 ? '' : $def[$i]['nov'],
+      ];
+      $form[$i]['Dec'] = [
+        '#type' => 'number',
+        '#default_value' => $def[$i]['dec'] == 0 ? '' : $def[$i]['dec'],
+      ];
+      $fQuarter = [
+        $def[$i]['oct'] == NULL ? 0 : round($def[$i]['oct'], 2),
+        $def[$i]['nov'] == NULL ? 0 : round($def[$i]['nov'], 2),
+        $def[$i]['dec'] == NULL ? 0 : round($def[$i]['dec'], 2),
+      ];
+      $form[$i]['Qfourth'] = [
+        '#type' => 'textfield',
+        '#value' => $fQuarter[0] == 0 && $fQuarter[1] == 0 && $fQuarter[2] == 0 ? "" : round((($fQuarter[0] + $fQuarter[1] + $fQuarter[2]) + 1) / 3, 2),
+        '#disabled' => TRUE,
+      ];
+      $yearly = [
+        $form[$i]["Qfirst"]['#value'] == "" ? 0 : round($form[$i]["Qfirst"]['#value'], 2),
+        $form[$i]["Qsecond"]['#value'] == "" ? 0 : round($form[$i]["Qsecond"]['#value'], 2),
+        $form[$i]["Qthird"]['#value'] == "" ? 0 : round($form[$i]["Qthird"]['#value'], 2),
+        $form[$i]["Qfourth"]['#value'] == "" ? 0 : round($form[$i]["Qfourth"]['#value'], 2),
+      ];
+      $form[$i]['YTD'] = [
+        '#type' => 'textfield',
+        '#value' => $form[$i]['Qfirst']['#value'] == 0 && $form[$i]['Qsecond']['#value'] == 0 && $form[$i]['Qthird']['#value'] == 0 && $form[$i]['Qfourth']['#value'] == 0 ? "" : round((($yearly[0] + $yearly[1] + $yearly[2] + $yearly[3]) + 1) / 4, 2),
+        '#disabled' => TRUE,
+      ];
+    }
+    $form['add'] = [
+      '#type' => 'button',
+      '#value' => 'Add year',
+      '#ajax' => [
+        'callback' => '::addYear',
+        'event' => 'click',
+        'progress' => [
+          'type' => 'throbber',
+          'message' => t('Adding year'),
+        ],
+      ],
     ];
     $form['actions']['submit'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Add'),
+      '#value' => $this->t('Submit'),
       '#description' => $this->t('Submit, #type = submit'),
     ];
     $form['#attached']['library'][] = 'anzy/my-lib';
@@ -261,6 +281,36 @@ class CalendarForm extends FormBase {
   }
 
   /**
+   * Adding new year table to the report.
+   */
+  public function addYear(array &$form, FormStateInterface $form_state) {
+    $response = new AjaxResponse();
+    $response->addCommand(new HtmlCommand('#form-system-messages', '<div class="alert alert-dismissible fade show col-12 alert-success">' . t('Year added successfully.') . '</div>'));
+    $year = $form_state->getValue('Year');
+    $year--;
+    $connection = \Drupal::service('database');
+    $update = $connection->insert('anzy')
+      ->fields([
+        'jan' => NULL,
+        'feb' => NULL,
+        'mar' => NULL,
+        'apr' => NULL,
+        'may' => NULL,
+        'jun' => NULL,
+        'jul' => NULL,
+        'aug' => NULL,
+        'sep' => NULL,
+        'oct' => NULL,
+        'nov' => NULL,
+        'dec' => NULL,
+        'reptable' => 0,
+        'year' => $year,
+      ])
+      ->execute();
+    return $response;
+  }
+
+  /**
    * {@inheritDoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
@@ -281,7 +331,7 @@ class CalendarForm extends FormBase {
           'nov' => $form_state->getValue('Nov') != '' ? $form_state->getValue('Nov') : NULL,
           'dec' => $form_state->getValue('Dec') != '' ? $form_state->getValue('Dec') : NULL,
           'reptable' => 0,
-          'year' => 0,
+          'year' => $form_state->getValue('Year'),
         ])
         ->execute();
     }
@@ -302,7 +352,7 @@ class CalendarForm extends FormBase {
           'nov' => $form_state->getValue('Nov') != '' ? $form_state->getValue('Nov') : NULL,
           'dec' => $form_state->getValue('Dec') != '' ? $form_state->getValue('Dec') : NULL,
           'reptable' => 0,
-          'year' => 0,
+          'year' => $form_state->getValue('Year'),
         ])
         ->execute();
     }

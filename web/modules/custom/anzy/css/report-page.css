@@ -1,65 +1,73 @@
-.table {
-  margin-bottom: 0!important;
+#main .clearfix .main-content .table {
+  margin-bottom: 0;
 }
 .alert {
   margin-top: 1rem;
 }
-fieldset {
+#main .clearfix .main-content fieldset {
   width: 72px;
   margin-bottom: 0!important;
   float: left;
 }
-fieldset input,
-fieldset input:hover,
-fieldset input:focus,
-fieldset input:active {
-  box-shadow: none!important;
+#main .clearfix .main-content fieldset input,
+#main .clearfix .main-content fieldset input:hover,
+#main .clearfix .main-content fieldset input:focus,
+#main .clearfix .main-content fieldset input:active {
+  box-shadow: none;
 }
-.form-control {
-  border-radius: 0!important;
-  border-bottom: 1px solid #757575!important;
-  border-left: 1px solid #757575!important;
-  border-right: none!important;
-  border-top: none!important;
+#main .clearfix .main-content .form-control {
+  border-radius: 0;
+  border-bottom: 1px solid #757575;
+  border-left: 1px solid #757575;
+  border-right: none;
+  border-top: none;
 }
-fieldset:nth-of-type(1) .form-control:disabled {
+#main .clearfix .main-content .firstField {
   background-color: #fff;
 }
-fieldset:nth-of-type(18) .form-control:disabled {
-  border-right: 1px solid #757575!important;
+#main .clearfix .main-content fieldset:nth-of-type(18n) .form-control:disabled {
+  border-right: 1px solid #757575;
 }
 .btn-primary {
   margin-bottom: 15px;
 }
-table tr th {
-  background: #757575;
-  background: rgba(0, 0, 0, 0.51);
+#main .clearfix .main-content table tr th {
   width: 72px;
   display: block;
   float: left;
   border: 1px solid #757575;
   border-right: none;
-  background-color: #fff!important;
-  color: #343a40!important;
+  background-color: #fff;
+  color: #343a40;
+  border-bottom: none;
 }
-table tr th:nth-of-type(5),
-table tr th:nth-of-type(9),
-table tr th:nth-of-type(13),
-table tr th:nth-of-type(17),
-table tr th:nth-of-type(18) {
-  background-color: #e9ecef!important;
+#main .clearfix .main-content table tr th:nth-of-type(5),
+#main .clearfix .main-content table tr th:nth-of-type(9),
+#main .clearfix .main-content table tr th:nth-of-type(13),
+#main .clearfix .main-content table tr th:nth-of-type(17),
+#main .clearfix .main-content table tr th:nth-of-type(18) {
+  background-color: #e9ecef;
 }
-table tr th:nth-of-type(18) {
+#main .clearfix .main-content table tr th:nth-of-type(18) {
   border-right: 1px solid #757575;
 }
 /* Chrome, Safari, Edge, Opera */
-fieldset input::-webkit-outer-spin-button,
-fieldset input::-webkit-inner-spin-button {
+#main .clearfix .main-content fieldset input::-webkit-outer-spin-button,
+#main .clearfix .main-content fieldset input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
 /* Firefox */
-fieldset input[type=number] {
+#main .clearfix .main-content fieldset input[type=number] {
   -moz-appearance: textfield;
+}
+#main .clearfix .main-content .form-submit {
+  width: 78px;
+  border: none;
+  background-color: #823ff4;
+  color: #fff;
+  border-radius: 4px;
+  margin: 12px 4px 16px 0;
+  float: left;
 }
