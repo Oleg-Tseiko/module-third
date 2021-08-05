@@ -54,6 +54,13 @@ class CalendarForm extends FormBase {
     );
     $result = $query->execute()->fetchAll();
     $result = json_decode(json_encode($result), TRUE);
+    for ($i = 0; $i < count($result); $i++) {
+      foreach ($result[$i] as $item => $value) {
+        if ($value == NULL) {
+          $result[$i][$item] = '';
+        }
+      }
+    }
     return $result;
   }
 
@@ -63,18 +70,18 @@ class CalendarForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $def = $this->load();
     if (empty($def)) {
-      $def[0]['jan'] = 0;
-      $def[0]['feb'] = 0;
-      $def[0]['mar'] = 0;
-      $def[0]['apr'] = 0;
-      $def[0]['may'] = 0;
-      $def[0]['jun'] = 0;
-      $def[0]['jul'] = 0;
-      $def[0]['aug'] = 0;
-      $def[0]['sep'] = 0;
-      $def[0]['oct'] = 0;
-      $def[0]['nov'] = 0;
-      $def[0]['dec'] = 0;
+      $def[0]['jan'] = "";
+      $def[0]['feb'] = "";
+      $def[0]['mar'] = "";
+      $def[0]['apr'] = "";
+      $def[0]['may'] = "";
+      $def[0]['jun'] = "";
+      $def[0]['jul'] = "";
+      $def[0]['aug'] = "";
+      $def[0]['sep'] = "";
+      $def[0]['oct'] = "";
+      $def[0]['nov'] = "";
+      $def[0]['dec'] = "";
     }
     $headers = [
       t('Year'),
@@ -119,20 +126,20 @@ class CalendarForm extends FormBase {
       ];
       $form['wrapper']["Jan$i"] = [
         '#type' => 'number',
-        '#default_value' => $def[$i]['jan'] == 0 ? '' : $def[$i]['jan'],
+        '#default_value' => $def[$i]['jan'],
       ];
       $form['wrapper']["Feb$i"] = [
         '#type' => 'number',
-        '#default_value' => $def[$i]['feb'] == 0 ? '' : $def[$i]['feb'],
+        '#default_value' => $def[$i]['feb'],
       ];
       $form['wrapper']["Mar$i"] = [
         '#type' => 'number',
-        '#default_value' => $def[$i]['mar'] == 0 ? '' : $def[$i]['mar'],
+        '#default_value' => $def[$i]['mar'],
       ];
       $fQuarter = [
-        $def[$i]['jan'] == NULL ? 0 : round($def[$i]['jan'], 2),
-        $def[$i]['feb'] == NULL ? 0 : round($def[$i]['feb'], 2),
-        $def[$i]['mar'] == NULL ? 0 : round($def[$i]['mar'], 2),
+        $def[$i]['jan'] == "" ? 0 : round($def[$i]['jan'], 2),
+        $def[$i]['feb'] == "" ? 0 : round($def[$i]['feb'], 2),
+        $def[$i]['mar'] == "" ? 0 : round($def[$i]['mar'], 2),
       ];
       $form['wrapper']["Qfirst$i"] = [
         '#type' => 'textfield',
@@ -141,20 +148,20 @@ class CalendarForm extends FormBase {
       ];
       $form['wrapper']["Apr$i"] = [
         '#type' => 'number',
-        '#default_value' => $def[$i]['apr'] == 0 ? '' : $def[$i]['apr'],
+        '#default_value' => $def[$i]['apr'],
       ];
       $form['wrapper']["May$i"] = [
         '#type' => 'number',
-        '#default_value' => $def[$i]['may'] == 0 ? '' : $def[$i]['may'],
+        '#default_value' => $def[$i]['may'],
       ];
       $form['wrapper']["Jun$i"] = [
         '#type' => 'number',
-        '#default_value' => $def[$i]['jun'] == 0 ? '' : $def[$i]['jun'],
+        '#default_value' => $def[$i]['jun'],
       ];
       $sQuarter = [
-        $def[$i]['apr'] == NULL ? 0 : round($def[$i]['apr'], 2),
-        $def[$i]['jun'] == NULL ? 0 : round($def[$i]['jun'], 2),
-        $def[$i]['may'] == NULL ? 0 : round($def[$i]['may'], 2),
+        $def[$i]['apr'] == "" ? 0 : round($def[$i]['apr'], 2),
+        $def[$i]['jun'] == "" ? 0 : round($def[$i]['jun'], 2),
+        $def[$i]['may'] == "" ? 0 : round($def[$i]['may'], 2),
       ];
       $form['wrapper']["Qsecond$i"] = [
         '#type' => 'textfield',
@@ -163,20 +170,20 @@ class CalendarForm extends FormBase {
       ];
       $form['wrapper']["Jul$i"] = [
         '#type' => 'number',
-        '#default_value' => $def[$i]['jul'] == 0 ? '' : $def[$i]['jul'],
+        '#default_value' => $def[$i]['jul'],
       ];
       $form['wrapper']["Aug$i"] = [
         '#type' => 'number',
-        '#default_value' => $def[$i]['aug'] == 0 ? '' : $def[$i]['aug'],
+        '#default_value' => $def[$i]['aug'],
       ];
       $form['wrapper']["Sep$i"] = [
         '#type' => 'number',
-        '#default_value' => $def[$i]['sep'] == 0 ? '' : $def[$i]['sep'],
+        '#default_value' => $def[$i]['sep'],
       ];
       $tQuarter = [
-        $def[$i]['jul'] == NULL ? 0 : round($def[$i]['jul'], 2),
-        $def[$i]['aug'] == NULL ? 0 : round($def[$i]['aug'], 2),
-        $def[$i]['sep'] == NULL ? 0 : round($def[$i]['sep'], 2),
+        $def[$i]['jul'] == "" ? 0 : round($def[$i]['jul'], 2),
+        $def[$i]['aug'] == "" ? 0 : round($def[$i]['aug'], 2),
+        $def[$i]['sep'] == "" ? 0 : round($def[$i]['sep'], 2),
       ];
       $form['wrapper']["Qthird$i"] = [
         '#type' => 'textfield',
@@ -185,20 +192,20 @@ class CalendarForm extends FormBase {
       ];
       $form['wrapper']["Oct$i"] = [
         '#type' => 'number',
-        '#default_value' => $def[$i]['oct'] == 0 ? '' : $def[$i]['oct'],
+        '#default_value' => $def[$i]['oct'],
       ];
       $form['wrapper']["Nov$i"] = [
         '#type' => 'number',
-        '#default_value' => $def[$i]['nov'] == 0 ? '' : $def[$i]['nov'],
+        '#default_value' => $def[$i]['nov'],
       ];
       $form['wrapper']["Dec$i"] = [
         '#type' => 'number',
-        '#default_value' => $def[$i]['dec'] == 0 ? '' : $def[$i]['dec'],
+        '#default_value' => $def[$i]['dec'],
       ];
       $fQuarter = [
-        $def[$i]['oct'] == NULL ? 0 : round($def[$i]['oct'], 2),
-        $def[$i]['nov'] == NULL ? 0 : round($def[$i]['nov'], 2),
-        $def[$i]['dec'] == NULL ? 0 : round($def[$i]['dec'], 2),
+        $def[$i]['oct'] == "" ? 0 : round($def[$i]['oct'], 2),
+        $def[$i]['nov'] == "" ? 0 : round($def[$i]['nov'], 2),
+        $def[$i]['dec'] == "" ? 0 : round($def[$i]['dec'], 2),
       ];
       $form['wrapper']["Qfourth$i"] = [
         '#type' => 'textfield',
@@ -243,8 +250,9 @@ class CalendarForm extends FormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
+    $def = $this->load();
     $monthsVal = [];
-    for ($i = count($this->load()) - 1; $i > -1; $i--) {
+    for ($i = count($def) - 1; $i > -1; $i--) {
       $monthsVal["Jan$i"] = $form_state->getValue("Jan$i");
       $monthsVal["Feb$i"] = $form_state->getValue("Feb$i");
       $monthsVal["Mar$i"] = $form_state->getValue("Mar$i");
@@ -291,24 +299,25 @@ class CalendarForm extends FormBase {
    * Adding new year table to the report.
    */
   public function addYear(array &$form, FormStateInterface $form_state) {
+    $def = $this->load();
     $response = new AjaxResponse();
     $response->addCommand(new HtmlCommand('#form-system-messages', '<div class="alert alert-dismissible fade show col-12 alert-success">' . t('Year added successfully.') . '</div>'));
     $connection = \Drupal::service('database');
-    if (empty($this->load())) {
+    if (empty($def)) {
       $result = $connection->insert('anzy')
         ->fields([
-          'jan' => $form_state->getValue('Jan') != '' ? $form_state->getValue('Jan') : NULL,
-          'feb' => $form_state->getValue('Feb') != '' ? $form_state->getValue('Feb') : NULL,
-          'mar' => $form_state->getValue('Mar') != '' ? $form_state->getValue('Mar') : NULL,
-          'apr' => $form_state->getValue('Apr') != '' ? $form_state->getValue('Apr') : NULL,
-          'may' => $form_state->getValue('May') != '' ? $form_state->getValue('May') : NULL,
-          'jun' => $form_state->getValue('Jun') != '' ? $form_state->getValue('Jun') : NULL,
-          'jul' => $form_state->getValue('Jul') != '' ? $form_state->getValue('Jul') : NULL,
-          'aug' => $form_state->getValue('Aug') != '' ? $form_state->getValue('Aug') : NULL,
-          'sep' => $form_state->getValue('Sep') != '' ? $form_state->getValue('Sep') : NULL,
-          'oct' => $form_state->getValue('Oct') != '' ? $form_state->getValue('Oct') : NULL,
-          'nov' => $form_state->getValue('Nov') != '' ? $form_state->getValue('Nov') : NULL,
-          'dec' => $form_state->getValue('Dec') != '' ? $form_state->getValue('Dec') : NULL,
+          'jan' => $form_state->getValue('Jan0') != '' ? $form_state->getValue('Jan0') : NULL,
+          'feb' => $form_state->getValue('Feb0') != '' ? $form_state->getValue('Feb0') : NULL,
+          'mar' => $form_state->getValue('Mar0') != '' ? $form_state->getValue('Mar0') : NULL,
+          'apr' => $form_state->getValue('Apr0') != '' ? $form_state->getValue('Apr0') : NULL,
+          'may' => $form_state->getValue('May0') != '' ? $form_state->getValue('May0') : NULL,
+          'jun' => $form_state->getValue('Jun0') != '' ? $form_state->getValue('Jun0') : NULL,
+          'jul' => $form_state->getValue('Jul0') != '' ? $form_state->getValue('Jul0') : NULL,
+          'aug' => $form_state->getValue('Aug0') != '' ? $form_state->getValue('Aug0') : NULL,
+          'sep' => $form_state->getValue('Sep0') != '' ? $form_state->getValue('Sep0') : NULL,
+          'oct' => $form_state->getValue('Oct0') != '' ? $form_state->getValue('Oct0') : NULL,
+          'nov' => $form_state->getValue('Nov0') != '' ? $form_state->getValue('Nov0') : NULL,
+          'dec' => $form_state->getValue('Dec0') != '' ? $form_state->getValue('Dec0') : NULL,
           'reptable' => 0,
           'year' => date('Y', time()),
         ])
@@ -332,6 +341,87 @@ class CalendarForm extends FormBase {
         'year' => date('Y', time()) - $form_state->getValue('hidden'),
       ])
       ->execute();
+    $index = count($def);
+    $form['wrapper']["Year$index"] = [
+      '#type' => 'number',
+      '#value' => date('Y', time()) - $form_state->getValue('hidden'),
+      '#disabled' => TRUE,
+      '#attributes' => ['class' => ['firstField']],
+    ];
+    $form['wrapper']["Jan$index"] = [
+      '#type' => 'number',
+      '#default_value' => "",
+    ];
+    $form['wrapper']["Feb$index"] = [
+      '#type' => 'number',
+      '#default_value' => "",
+    ];
+    $form['wrapper']["Mar$index"] = [
+      '#type' => 'number',
+      '#default_value' => "",
+    ];
+    $form['wrapper']["Qfirst$index"] = [
+      '#type' => 'textfield',
+      '#value' => "",
+      '#disabled' => TRUE,
+    ];
+    $form['wrapper']["Apr$index"] = [
+      '#type' => 'number',
+      '#default_value' => "",
+    ];
+    $form['wrapper']["May$index"] = [
+      '#type' => 'number',
+      '#default_value' => "",
+    ];
+    $form['wrapper']["Jun$index"] = [
+      '#type' => 'number',
+      '#default_value' => "",
+    ];
+    $form['wrapper']["Qsecond$index"] = [
+      '#type' => 'textfield',
+      '#value' => "",
+      '#disabled' => TRUE,
+    ];
+    $form['wrapper']["Jul$index"] = [
+      '#type' => 'number',
+      '#default_value' => "",
+    ];
+    $form['wrapper']["Aug$index"] = [
+      '#type' => 'number',
+      '#default_value' => "",
+    ];
+    $form['wrapper']["Sep$index"] = [
+      '#type' => 'number',
+      '#default_value' => "",
+    ];
+    $form['wrapper']["Qthird$index"] = [
+      '#type' => 'textfield',
+      '#value' => "",
+      '#disabled' => TRUE,
+    ];
+    $form['wrapper']["Oct$index"] = [
+      '#type' => 'number',
+      '#default_value' => "",
+    ];
+    $form['wrapper']["Nov$index"] = [
+      '#type' => 'number',
+      '#default_value' => "",
+    ];
+    $form['wrapper']["Dec$index"] = [
+      '#type' => 'number',
+      '#default_value' => "",
+    ];
+    $form['wrapper']["Qfourth$index"] = [
+      '#type' => 'textfield',
+      '#value' => "",
+      '#disabled' => TRUE,
+    ];
+    $form['wrapper']["YTD$index"] = [
+      '#type' => 'textfield',
+      '#value' => "",
+      '#disabled' => TRUE,
+    ];
+    $form_state->setRebuild(TRUE);
     return $form['wrapper'];
   }
 
@@ -339,11 +429,11 @@ class CalendarForm extends FormBase {
    * {@inheritDoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $form_state->setRebuild(TRUE);
     $connection = \Drupal::service('database');
     $def = $this->load();
-    if (!empty($this->load())) {
-      for ($i = 0; $i < count($this->load()); $i++) {
+    if (!empty($def)) {
+      for ($i = 0; $i < count($def); $i++) {
+        $test = $form_state->getValue("Sep$i") != '' ? $form_state->getValue("Sep$i") : NULL;
         $result = $connection->update('anzy')
           ->condition('year', $form_state->getValue("Year$i"))
           ->fields([
@@ -363,6 +453,26 @@ class CalendarForm extends FormBase {
           ])
           ->execute();
       }
+    }
+    else {
+      $result = $connection->insert('anzy')
+        ->fields([
+          'jan' => $form_state->getValue('Jan0') != '' ? $form_state->getValue('Jan0') : NULL,
+          'feb' => $form_state->getValue('Feb0') != '' ? $form_state->getValue('Feb0') : NULL,
+          'mar' => $form_state->getValue('Mar0') != '' ? $form_state->getValue('Mar0') : NULL,
+          'apr' => $form_state->getValue('Apr0') != '' ? $form_state->getValue('Apr0') : NULL,
+          'may' => $form_state->getValue('May0') != '' ? $form_state->getValue('May0') : NULL,
+          'jun' => $form_state->getValue('Jun0') != '' ? $form_state->getValue('Jun0') : NULL,
+          'jul' => $form_state->getValue('Jul0') != '' ? $form_state->getValue('Jul0') : NULL,
+          'aug' => $form_state->getValue('Aug0') != '' ? $form_state->getValue('Aug0') : NULL,
+          'sep' => $form_state->getValue('Sep0') != '' ? $form_state->getValue('Sep0') : NULL,
+          'oct' => $form_state->getValue('Oct0') != '' ? $form_state->getValue('Oct0') : NULL,
+          'nov' => $form_state->getValue('Nov0') != '' ? $form_state->getValue('Nov0') : NULL,
+          'dec' => $form_state->getValue('Dec0') != '' ? $form_state->getValue('Dec0') : NULL,
+          'reptable' => 0,
+          'year' => date('Y', time()),
+        ])
+        ->execute();
     }
     \Drupal::messenger()->addMessage($this->t('Report updated successfully'), 'status', TRUE);
   }
