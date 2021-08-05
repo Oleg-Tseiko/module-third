@@ -69,6 +69,24 @@ class CalendarForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $def = $this->load();
+    $lastYear = 0;
+    if (!empty($form_state->getUserInput())) {
+      $index = count($def);
+      $def[$index]['jan'] = "";
+      $def[$index]['feb'] = "";
+      $def[$index]['mar'] = "";
+      $def[$index]['apr'] = "";
+      $def[$index]['may'] = "";
+      $def[$index]['jun'] = "";
+      $def[$index]['jul'] = "";
+      $def[$index]['aug'] = "";
+      $def[$index]['sep'] = "";
+      $def[$index]['oct'] = "";
+      $def[$index]['nov'] = "";
+      $def[$index]['dec'] = "";
+      $def[$index]['year'] = date('Y', time()) - $index;
+      $lastYear = -1;
+    }
     if (empty($def)) {
       $def[0]['jan'] = "";
       $def[0]['feb'] = "";
@@ -115,7 +133,7 @@ class CalendarForm extends FormBase {
       '#type' => 'table',
       '#header' => $headers,
     ];
-    $lastYear = 0;
+
     for ($i = count($def) - 1; $i != -1; $i--) {
       $lastYear++;
       $form['wrapper']["Year$i"] = [
@@ -341,86 +359,6 @@ class CalendarForm extends FormBase {
         'year' => date('Y', time()) - $form_state->getValue('hidden'),
       ])
       ->execute();
-    $index = count($def);
-    $form['wrapper']["Year$index"] = [
-      '#type' => 'number',
-      '#value' => date('Y', time()) - $form_state->getValue('hidden'),
-      '#disabled' => TRUE,
-      '#attributes' => ['class' => ['firstField']],
-    ];
-    $form['wrapper']["Jan$index"] = [
-      '#type' => 'number',
-      '#default_value' => "",
-    ];
-    $form['wrapper']["Feb$index"] = [
-      '#type' => 'number',
-      '#default_value' => "",
-    ];
-    $form['wrapper']["Mar$index"] = [
-      '#type' => 'number',
-      '#default_value' => "",
-    ];
-    $form['wrapper']["Qfirst$index"] = [
-      '#type' => 'textfield',
-      '#value' => "",
-      '#disabled' => TRUE,
-    ];
-    $form['wrapper']["Apr$index"] = [
-      '#type' => 'number',
-      '#default_value' => "",
-    ];
-    $form['wrapper']["May$index"] = [
-      '#type' => 'number',
-      '#default_value' => "",
-    ];
-    $form['wrapper']["Jun$index"] = [
-      '#type' => 'number',
-      '#default_value' => "",
-    ];
-    $form['wrapper']["Qsecond$index"] = [
-      '#type' => 'textfield',
-      '#value' => "",
-      '#disabled' => TRUE,
-    ];
-    $form['wrapper']["Jul$index"] = [
-      '#type' => 'number',
-      '#default_value' => "",
-    ];
-    $form['wrapper']["Aug$index"] = [
-      '#type' => 'number',
-      '#default_value' => "",
-    ];
-    $form['wrapper']["Sep$index"] = [
-      '#type' => 'number',
-      '#default_value' => "",
-    ];
-    $form['wrapper']["Qthird$index"] = [
-      '#type' => 'textfield',
-      '#value' => "",
-      '#disabled' => TRUE,
-    ];
-    $form['wrapper']["Oct$index"] = [
-      '#type' => 'number',
-      '#default_value' => "",
-    ];
-    $form['wrapper']["Nov$index"] = [
-      '#type' => 'number',
-      '#default_value' => "",
-    ];
-    $form['wrapper']["Dec$index"] = [
-      '#type' => 'number',
-      '#default_value' => "",
-    ];
-    $form['wrapper']["Qfourth$index"] = [
-      '#type' => 'textfield',
-      '#value' => "",
-      '#disabled' => TRUE,
-    ];
-    $form['wrapper']["YTD$index"] = [
-      '#type' => 'textfield',
-      '#value' => "",
-      '#disabled' => TRUE,
-    ];
     $form_state->setRebuild(TRUE);
     return $form['wrapper'];
   }
