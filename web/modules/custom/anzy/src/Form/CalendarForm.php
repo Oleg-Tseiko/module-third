@@ -51,7 +51,7 @@ class CalendarForm extends FormBase {
       $this->rowsCount++;
       $quartalsVal = $session->get('monthsVal');
     }
-    else {
+    elseif (!empty($inputes)) {
       $this->rowsCount = $inputes["hidden"];
     }
     if ($session->get('falseValid') != 1) {
@@ -102,38 +102,14 @@ class CalendarForm extends FormBase {
       $form['wrapper']["Jan$i"] = [
         '#type' => 'number',
         '#default_value' => "",
-        '#ajax' => [
-          'callback' => '::countQuartals',
-          'event' => 'change',
-          'progress' => [
-            'type' => 'none',
-            'message' => '',
-          ],
-        ],
       ];
       $form['wrapper']["Feb$i"] = [
         '#type' => 'number',
         '#default_value' => "",
-        '#ajax' => [
-          'callback' => '::countQuartals',
-          'event' => 'change',
-          'progress' => [
-            'type' => 'none',
-            'message' => '',
-          ],
-        ],
       ];
       $form['wrapper']["Mar$i"] = [
         '#type' => 'number',
         '#default_value' => "",
-        '#ajax' => [
-          'callback' => '::countQuartals',
-          'event' => 'change',
-          'progress' => [
-            'type' => 'none',
-            'message' => '',
-          ],
-        ],
       ];
       $form['wrapper']["Qfirst$i"] = [
         '#type' => 'textfield',
@@ -143,38 +119,14 @@ class CalendarForm extends FormBase {
       $form['wrapper']["Apr$i"] = [
         '#type' => 'number',
         '#default_value' => "",
-        '#ajax' => [
-          'callback' => '::countQuartals',
-          'event' => 'change',
-          'progress' => [
-            'type' => 'none',
-            'message' => '',
-          ],
-        ],
       ];
       $form['wrapper']["May$i"] = [
         '#type' => 'number',
         '#default_value' => "",
-        '#ajax' => [
-          'callback' => '::countQuartals',
-          'event' => 'change',
-          'progress' => [
-            'type' => 'none',
-            'message' => '',
-          ],
-        ],
       ];
       $form['wrapper']["Jun$i"] = [
         '#type' => 'number',
         '#default_value' => "",
-        '#ajax' => [
-          'callback' => '::countQuartals',
-          'event' => 'change',
-          'progress' => [
-            'type' => 'none',
-            'message' => '',
-          ],
-        ],
       ];
       $form['wrapper']["Qsecond$i"] = [
         '#type' => 'textfield',
@@ -184,38 +136,14 @@ class CalendarForm extends FormBase {
       $form['wrapper']["Jul$i"] = [
         '#type' => 'number',
         '#default_value' => "",
-        '#ajax' => [
-          'callback' => '::countQuartals',
-          'event' => 'change',
-          'progress' => [
-            'type' => 'none',
-            'message' => '',
-          ],
-        ],
       ];
       $form['wrapper']["Aug$i"] = [
         '#type' => 'number',
         '#default_value' => "",
-        '#ajax' => [
-          'callback' => '::countQuartals',
-          'event' => 'change',
-          'progress' => [
-            'type' => 'none',
-            'message' => '',
-          ],
-        ],
       ];
       $form['wrapper']["Sep$i"] = [
         '#type' => 'number',
         '#default_value' => "",
-        '#ajax' => [
-          'callback' => '::countQuartals',
-          'event' => 'change',
-          'progress' => [
-            'type' => 'none',
-            'message' => '',
-          ],
-        ],
       ];
       $form['wrapper']["Qthird$i"] = [
         '#type' => 'textfield',
@@ -225,38 +153,14 @@ class CalendarForm extends FormBase {
       $form['wrapper']["Oct$i"] = [
         '#type' => 'number',
         '#default_value' => "",
-        '#ajax' => [
-          'callback' => '::countQuartals',
-          'event' => 'change',
-          'progress' => [
-            'type' => 'none',
-            'message' => '',
-          ],
-        ],
       ];
       $form['wrapper']["Nov$i"] = [
         '#type' => 'number',
         '#default_value' => "",
-        '#ajax' => [
-          'callback' => '::countQuartals',
-          'event' => 'change',
-          'progress' => [
-            'type' => 'none',
-            'message' => '',
-          ],
-        ],
       ];
       $form['wrapper']["Dec$i"] = [
         '#type' => 'number',
         '#default_value' => "",
-        '#ajax' => [
-          'callback' => '::countQuartals',
-          'event' => 'change',
-          'progress' => [
-            'type' => 'none',
-            'message' => '',
-          ],
-        ],
       ];
       $form['wrapper']["Qfourth$i"] = [
         '#type' => 'textfield',
@@ -354,10 +258,9 @@ class CalendarForm extends FormBase {
   }
 
   /**
-   * Adding new year table to the report.
+   * {@inheritDoc}
    */
-  public function countQuartals(array &$form, FormStateInterface $form_state) {
-    $form_state->setRebuild(TRUE);
+  public function submitForm(array &$form, FormStateInterface $form_state) {
     $session = \Drupal::request()->getSession();
     $monthsVal = [];
     for ($i = $this->rowsCount; $i > -1; $i--) {
@@ -394,13 +297,6 @@ class CalendarForm extends FormBase {
       $monthsVal["YTD$i"] = $monthsVal["Qfirst$i"] == 0 && $monthsVal["Qsecond$i"] == 0 && $monthsVal["Qthird$i"] == 0 && $monthsVal["Qfourth$i"] == 0 ? "" : round((($monthsVal["YTD$i"][0] + $monthsVal["YTD$i"][1] + $monthsVal["YTD$i"][2] + $monthsVal["YTD$i"][3]) + 1) / 4, 2);
     }
     $session->set('monthsVal', $monthsVal);
-    return $form['wrapper'];
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
     \Drupal::messenger()->addMessage($this->t('Report updated successfully'), 'status', TRUE);
   }
 
@@ -408,8 +304,10 @@ class CalendarForm extends FormBase {
    * Adding new year table to the report.
    */
   public function submitCall(array &$form, FormStateInterface $form_state) {
-    \Drupal::request()->getSession()->set('Rebuild', 0);
-    \Drupal::request()->getSession()->set('falseValid', 0);
+    $form_state->setRebuild(TRUE);
+    $session = \Drupal::request()->getSession();
+    $session->set('Rebuild', 0);
+    $session->set('falseValid', 0);
     return $form['wrapper'];
   }
 
