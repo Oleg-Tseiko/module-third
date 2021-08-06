@@ -44,9 +44,21 @@ class CalendarForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $inputes = $form_state->getUserInput();
-    if (!empty($inputes)) {
+    $session = \Drupal::request()->getSession();
+    $quartalsVal = [];
+    if (!empty($inputes) && $session->get('Rebuild') == 1) {
       $this->rowsCount = $inputes["hidden"];
       $this->rowsCount++;
+      $quartalsVal = $session->get('monthsVal');
+    }
+    else {
+      $this->rowsCount = $inputes["hidden"];
+    }
+    if ($session->get('falseValid') != 1) {
+      $quartalsVal = $session->get('monthsVal');
+    }
+    else {
+      $quartalsVal = [];
     }
     $headers = [
       t('Year'),
@@ -91,121 +103,169 @@ class CalendarForm extends FormBase {
         '#type' => 'number',
         '#default_value' => "",
         '#ajax' => [
-          'callback' => '::validateTable',
+          'callback' => '::countQuartals',
           'event' => 'change',
+          'progress' => [
+            'type' => 'none',
+            'message' => '',
+          ],
         ],
       ];
       $form['wrapper']["Feb$i"] = [
         '#type' => 'number',
         '#default_value' => "",
         '#ajax' => [
-          'callback' => '::validateTable',
+          'callback' => '::countQuartals',
           'event' => 'change',
+          'progress' => [
+            'type' => 'none',
+            'message' => '',
+          ],
         ],
       ];
       $form['wrapper']["Mar$i"] = [
         '#type' => 'number',
         '#default_value' => "",
         '#ajax' => [
-          'callback' => '::validateTable',
+          'callback' => '::countQuartals',
           'event' => 'change',
+          'progress' => [
+            'type' => 'none',
+            'message' => '',
+          ],
         ],
       ];
       $form['wrapper']["Qfirst$i"] = [
         '#type' => 'textfield',
-        '#value' => "",
+        '#value' => $quartalsVal["Qfirst$i"] ?? '',
         '#disabled' => TRUE,
       ];
       $form['wrapper']["Apr$i"] = [
         '#type' => 'number',
         '#default_value' => "",
         '#ajax' => [
-          'callback' => '::validateTable',
+          'callback' => '::countQuartals',
           'event' => 'change',
+          'progress' => [
+            'type' => 'none',
+            'message' => '',
+          ],
         ],
       ];
       $form['wrapper']["May$i"] = [
         '#type' => 'number',
         '#default_value' => "",
         '#ajax' => [
-          'callback' => '::validateTable',
+          'callback' => '::countQuartals',
           'event' => 'change',
+          'progress' => [
+            'type' => 'none',
+            'message' => '',
+          ],
         ],
       ];
       $form['wrapper']["Jun$i"] = [
         '#type' => 'number',
         '#default_value' => "",
         '#ajax' => [
-          'callback' => '::validateTable',
+          'callback' => '::countQuartals',
           'event' => 'change',
+          'progress' => [
+            'type' => 'none',
+            'message' => '',
+          ],
         ],
       ];
       $form['wrapper']["Qsecond$i"] = [
         '#type' => 'textfield',
-        '#value' => "",
+        '#value' => $quartalsVal["Qsecond$i"] ?? '',
         '#disabled' => TRUE,
       ];
       $form['wrapper']["Jul$i"] = [
         '#type' => 'number',
         '#default_value' => "",
         '#ajax' => [
-          'callback' => '::validateTable',
+          'callback' => '::countQuartals',
           'event' => 'change',
+          'progress' => [
+            'type' => 'none',
+            'message' => '',
+          ],
         ],
       ];
       $form['wrapper']["Aug$i"] = [
         '#type' => 'number',
         '#default_value' => "",
         '#ajax' => [
-          'callback' => '::validateTable',
+          'callback' => '::countQuartals',
           'event' => 'change',
+          'progress' => [
+            'type' => 'none',
+            'message' => '',
+          ],
         ],
       ];
       $form['wrapper']["Sep$i"] = [
         '#type' => 'number',
         '#default_value' => "",
         '#ajax' => [
-          'callback' => '::validateTable',
+          'callback' => '::countQuartals',
           'event' => 'change',
+          'progress' => [
+            'type' => 'none',
+            'message' => '',
+          ],
         ],
       ];
       $form['wrapper']["Qthird$i"] = [
         '#type' => 'textfield',
-        '#value' => "",
+        '#value' => $quartalsVal["Qthird$i"] ?? '',
         '#disabled' => TRUE,
       ];
       $form['wrapper']["Oct$i"] = [
         '#type' => 'number',
         '#default_value' => "",
         '#ajax' => [
-          'callback' => '::validateTable',
+          'callback' => '::countQuartals',
           'event' => 'change',
+          'progress' => [
+            'type' => 'none',
+            'message' => '',
+          ],
         ],
       ];
       $form['wrapper']["Nov$i"] = [
         '#type' => 'number',
         '#default_value' => "",
         '#ajax' => [
-          'callback' => '::validateTable',
+          'callback' => '::countQuartals',
           'event' => 'change',
+          'progress' => [
+            'type' => 'none',
+            'message' => '',
+          ],
         ],
       ];
       $form['wrapper']["Dec$i"] = [
         '#type' => 'number',
         '#default_value' => "",
         '#ajax' => [
-          'callback' => '::validateTable',
+          'callback' => '::countQuartals',
           'event' => 'change',
+          'progress' => [
+            'type' => 'none',
+            'message' => '',
+          ],
         ],
       ];
       $form['wrapper']["Qfourth$i"] = [
         '#type' => 'textfield',
-        '#value' => "",
+        '#value' => $quartalsVal["Qfourth$i"] ?? '',
         '#disabled' => TRUE,
       ];
       $form['wrapper']["YTD$i"] = [
         '#type' => 'textfield',
-        '#value' => "",
+        '#value' => $quartalsVal["YTD$i"] ?? '',
         '#disabled' => TRUE,
       ];
       $form['wrapper']['hidden'] = [
@@ -216,7 +276,7 @@ class CalendarForm extends FormBase {
 
     $form['wrapper']['add'] = [
       '#type' => 'submit',
-      '#value' => 'Add year',
+      '#value' => t('Add year'),
       '#ajax' => [
         'callback' => '::addYear',
         'wrapper'    => 'data-wrapper',
@@ -224,14 +284,11 @@ class CalendarForm extends FormBase {
     ];
     $form['wrapper']['actions']['submit'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Submit'),
-      '#description' => $this->t('Submit, #type = submit'),
+      '#value' => t('Submit'),
+      '#description' => t('Submit, #type = submit'),
       '#ajax' => [
-        'callback' => '::ajaxForm',
-        'event' => 'click',
-        'progress' => [
-          'type' => 'throbber',
-        ],
+        'callback' => '::submitCall',
+        'wrapper'    => 'data-wrapper',
       ],
     ];
     $form['#attached']['library'][] = 'anzy/my-lib';
@@ -280,8 +337,9 @@ class CalendarForm extends FormBase {
     $fieldsName = array_slice($fieldsName, 0, $offset - $theLastOne, TRUE);
     if ($count != $values) {
       foreach ($fieldsName as $name) {
-        $form_state->setErrorByName("wrapper", t('There is a space in report, you need to fix it.'));
+        $form_state->setErrorByName($name, t('There is a space in report, you need to fix'));
       }
+      \Drupal::request()->getSession()->set('falseValid', 1);
     }
     return $form;
   }
@@ -291,56 +349,52 @@ class CalendarForm extends FormBase {
    */
   public function addYear(array &$form, FormStateInterface $form_state) {
     $form_state->setRebuild(TRUE);
+    \Drupal::request()->getSession()->set('Rebuild', 1);
     return $form['wrapper'];
   }
 
   /**
    * Adding new year table to the report.
    */
-  public function validateTable(array &$form, FormStateInterface $form_state) {
-    $response = new AjaxResponse();
+  public function countQuartals(array &$form, FormStateInterface $form_state) {
+    $form_state->setRebuild(TRUE);
+    $session = \Drupal::request()->getSession();
     $monthsVal = [];
     for ($i = $this->rowsCount; $i > -1; $i--) {
-      $monthsVal["Jan$i"] = $form_state->getValue("Jan$i");
-      $monthsVal["Feb$i"] = $form_state->getValue("Feb$i");
-      $monthsVal["Mar$i"] = $form_state->getValue("Mar$i");
-      $monthsVal["Apr$i"] = $form_state->getValue("Apr$i");
-      $monthsVal["May$i"] = $form_state->getValue("May$i");
-      $monthsVal["Jun$i"] = $form_state->getValue("Jun$i");
-      $monthsVal["Jul$i"] = $form_state->getValue("Jul$i");
-      $monthsVal["Aug$i"] = $form_state->getValue("Aug$i");
-      $monthsVal["Sep$i"] = $form_state->getValue("Sep$i");
-      $monthsVal["Oct$i"] = $form_state->getValue("Oct$i");
-      $monthsVal["Nov$i"] = $form_state->getValue("Nov$i");
-      $monthsVal["Dec$i"] = $form_state->getValue("Dec$i");
+      $monthsVal["Qfirst$i"] = [
+        $form_state->getValue("Jan$i") == NULL ? 0 : round($form_state->getValue("Jan$i"), 2),
+        $form_state->getValue("Feb$i") == NULL ? 0 : round($form_state->getValue("Feb$i"), 2),
+        $form_state->getValue("Mar$i") == NULL ? 0 : round($form_state->getValue("Mar$i"), 2),
+      ];
+      $monthsVal["Qfirst$i"] = $monthsVal["Qfirst$i"][0] == 0 && $monthsVal["Qfirst$i"][1] == 0 && $monthsVal["Qfirst$i"][2] == 0 ? "" : round((($monthsVal["Qfirst$i"][0] + $monthsVal["Qfirst$i"][1] + $monthsVal["Qfirst$i"][2]) + 1) / 3, 2);
+      $monthsVal["Qsecond$i"] = [
+        $form_state->getValue("Apr$i") == NULL ? 0 : round($form_state->getValue("Apr$i"), 2),
+        $form_state->getValue("May$i") == NULL ? 0 : round($form_state->getValue("May$i"), 2),
+        $form_state->getValue("Jun$i") == NULL ? 0 : round($form_state->getValue("Jun$i"), 2),
+      ];
+      $monthsVal["Qsecond$i"] = $monthsVal["Qsecond$i"][0] == 0 && $monthsVal["Qsecond$i"][1] == 0 && $monthsVal["Qsecond$i"][2] == 0 ? "" : round((($monthsVal["Qsecond$i"][0] + $monthsVal["Qsecond$i"][1] + $monthsVal["Qsecond$i"][2]) + 1) / 3, 2);
+      $monthsVal["Qthird$i"] = [
+        $form_state->getValue("Jul$i") == NULL ? 0 : round($form_state->getValue("Jul$i"), 2),
+        $form_state->getValue("Aug$i") == NULL ? 0 : round($form_state->getValue("Aug$i"), 2),
+        $form_state->getValue("Sep$i") == NULL ? 0 : round($form_state->getValue("Sep$i"), 2),
+      ];
+      $monthsVal["Qthird$i"] = $monthsVal["Qthird$i"][0] == 0 && $monthsVal["Qthird$i"][1] == 0 && $monthsVal["Qthird$i"][2] == 0 ? "" : round((($monthsVal["Qthird$i"][0] + $monthsVal["Qthird$i"][1] + $monthsVal["Qthird$i"][2]) + 1) / 3, 2);
+      $monthsVal["Qfourth$i"] = [
+        $form_state->getValue("Oct$i") == NULL ? 0 : round($form_state->getValue("Oct$i"), 2),
+        $form_state->getValue("Nov$i") == NULL ? 0 : round($form_state->getValue("Nov$i"), 2),
+        $form_state->getValue("Dec$i") == NULL ? 0 : round($form_state->getValue("Dec$i"), 2),
+      ];
+      $monthsVal["Qfourth$i"] = $monthsVal["Qfourth$i"][0] == 0 && $monthsVal["Qfourth$i"][1] == 0 && $monthsVal["Qfourth$i"][2] == 0 ? "" : round((($monthsVal["Qfourth$i"][0] + $monthsVal["Qfourth$i"][1] + $monthsVal["Qfourth$i"][2]) + 1) / 3, 2);
+      $monthsVal["YTD$i"] = [
+        $monthsVal["Qfirst$i"] == "" ? 0 : round($monthsVal["Qfirst$i"], 2),
+        $monthsVal["Qsecond$i"] == "" ? 0 : round($monthsVal["Qsecond$i"], 2),
+        $monthsVal["Qthird$i"] == "" ? 0 : round($monthsVal["Qthird$i"], 2),
+        $monthsVal["Qfourth$i"] == "" ? 0 : round($monthsVal["Qfourth$i"], 2),
+      ];
+      $monthsVal["YTD$i"] = $monthsVal["Qfirst$i"] == 0 && $monthsVal["Qsecond$i"] == 0 && $monthsVal["Qthird$i"] == 0 && $monthsVal["Qfourth$i"] == 0 ? "" : round((($monthsVal["YTD$i"][0] + $monthsVal["YTD$i"][1] + $monthsVal["YTD$i"][2] + $monthsVal["YTD$i"][3]) + 1) / 4, 2);
     }
-    $count = 0;
-    $values = 0;
-    $theLastOne = 0;
-    $offset = 0;
-    $fieldsName = [];
-    foreach ($monthsVal as $month => $number) {
-      if ($number != "") {
-        $count++;
-        $values++;
-        if ($theLastOne != 0) {
-          $count--;
-          $theLastOne = 0;
-        }
-      }
-      elseif ($count != 0) {
-        $fieldsName[$offset] = $month;
-        $theLastOne++;
-        $offset++;
-      }
-    }
-    $fieldsName = array_slice($fieldsName, 0, $offset - $theLastOne, TRUE);
-    if ($count != $values) {
-      foreach ($fieldsName as $name) {
-        $response->addCommand(new HtmlCommand('#form-system-messages', '<div class="alert alert-dismissible fade show col-12 alert-danger">' . t('You have a space in your report you need to fix it.') . '</div>'));
-      }
-    }
-    return $response;
+    $session->set('monthsVal', $monthsVal);
+    return $form['wrapper'];
   }
 
   /**
@@ -351,23 +405,12 @@ class CalendarForm extends FormBase {
   }
 
   /**
-   * Ajax callback for submit.
+   * Adding new year table to the report.
    */
-  public function ajaxForm(array &$form, FormStateInterface $form_state) {
-    $ajax_response = new AjaxResponse();
-    $message = [
-      '#theme' => 'status_messages',
-      '#message_list' => $this->messenger()->all(),
-      '#status_headings' => [
-        'status' => t('Status message'),
-        'error' => t('Error message'),
-        'warning' => t('Warning message'),
-      ],
-    ];
-    $messages = \Drupal::service('renderer')->render($message);
-    $ajax_response->addCommand(new HtmlCommand('#form-system-messages', $messages));
-    $form_state->setRebuild(TRUE);
-    return $ajax_response;
+  public function submitCall(array &$form, FormStateInterface $form_state) {
+    \Drupal::request()->getSession()->set('Rebuild', 0);
+    \Drupal::request()->getSession()->set('falseValid', 0);
+    return $form['wrapper'];
   }
 
 }
