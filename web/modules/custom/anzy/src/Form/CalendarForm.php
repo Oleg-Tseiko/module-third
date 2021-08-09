@@ -21,7 +21,7 @@ class CalendarForm extends FormBase {
    *
    * @var tableCount
    */
-  protected $tableCount = 0;
+  protected $tableCount = 1;
 
   /**
    * Contain number of rows to display.
@@ -114,15 +114,18 @@ class CalendarForm extends FormBase {
     $inputes = $form_state->getUserInput();
     $quartalsVal = [];
     if (!empty($inputes) && $inputes["_triggering_element_value"] == "Add Table") {
+      $this->rowsCount = $inputes["hidden"];
       $this->tableCount = $inputes['hiddenTable'];
       $this->tableCount++;
     }
     if (!empty($inputes) && $inputes["_triggering_element_value"] == "Add year") {
       $this->rowsCount = $inputes["hidden"];
+      $this->tableCount = $inputes['hiddenTable'];
       $this->rowsCount++;
     }
-    elseif (!empty($inputes)) {
+    elseif (!empty($inputes) && $inputes["_triggering_element_value"] == "Submit") {
       $this->rowsCount = $inputes["hidden"];
+      $this->tableCount = $inputes['hiddenTable'];
     }
     $monthsVal = [];
     if (!empty($inputes)) {
@@ -153,111 +156,111 @@ class CalendarForm extends FormBase {
       '#markup' => '<div id="form-system-messages"></div>',
       '#weight' => -100,
     ];
+    $headers = [
+      t('Year'),
+      t('Jan'),
+      t('Feb'),
+      t('Mar'),
+      t('Q1'),
+      t('Apr'),
+      t('May'),
+      t('Jun'),
+      t('Q2'),
+      t('Jul'),
+      t('Aug'),
+      t('Sep'),
+      t('Q3'),
+      t('Oct'),
+      t('Nov'),
+      t('Dec'),
+      t('Q4'),
+      t('YTD'),
+    ];
+    $form["wrapper"] = [
+      '#type' => 'container',
+      '#attributes' => ['id' => 'data-wrapper'],
+    ];
     for ($j = 0; $j < $this->tableCount; $j++) {
-      $headers = [
-        t('Year'),
-        t('Jan'),
-        t('Feb'),
-        t('Mar'),
-        t('Q1'),
-        t('Apr'),
-        t('May'),
-        t('Jun'),
-        t('Q2'),
-        t('Jul'),
-        t('Aug'),
-        t('Sep'),
-        t('Q3'),
-        t('Oct'),
-        t('Nov'),
-        t('Dec'),
-        t('Q4'),
-        t('YTD'),
-      ];
-      $form["wrapper$j"] = [
-        '#type' => 'container',
-        '#attributes' => ['id' => 'data-wrapper'],
-      ];
-      $form["wrapper$j"]["table$j"] = [
+      $form["wrapper"]["table$j"] = [
         '#type' => 'table',
         '#header' => $headers,
       ];
       for ($i = $this->rowsCount; $i != -1; $i--) {
-        $form["wrapper$j"]["Year$j$i"] = [
+        $form["wrapper"]["Year$j$i"] = [
           '#type' => 'number',
           '#value' => $i == 0 ? date('Y', time()) : date('Y', time()) - $i,
           '#disabled' => TRUE,
           '#attributes' => ['class' => ['firstField']],
         ];
-        $form["wrapper$j"]["Jan$j$i"] = [
+        $form["wrapper"]["Jan$j$i"] = [
           '#type' => 'number',
           '#default_value' => "",
         ];
-        $form["wrapper$j"]["Feb$j$i"] = [
+        $form["wrapper"]["Feb$j$i"] = [
           '#type' => 'number',
           '#default_value' => "",
         ];
-        $form["wrapper$j"]["Mar$j$i"] = [
+        $form["wrapper"]["Mar$j$i"] = [
           '#type' => 'number',
           '#default_value' => "",
         ];
-        $form["wrapper$j"]["Qfirst$j$i"] = [
+        $form["wrapper"]["Qfirst$j$i"] = [
           '#type' => 'textfield',
           '#value' => $quartalsVal["Qfirst$j$i"] ?? '',
           '#disabled' => TRUE,
         ];
-        $form["wrapper$j"]["Apr$j$i"] = [
+        $form["wrapper"]["Apr$j$i"] = [
           '#type' => 'number',
           '#default_value' => "",
         ];
-        $form["wrapper$j"]["May$j$i"] = [
+        $form["wrapper"]["May$j$i"] = [
           '#type' => 'number',
           '#default_value' => "",
         ];
-        $form["wrapper$j"]["Jun$j$i"] = [
+        $form["wrapper"]["Jun$j$i"] = [
           '#type' => 'number',
           '#default_value' => "",
         ];
-        $form["wrapper$j"]["Qsecond$j$i"] = [
+        $form["wrapper"]["Qsecond$j$i"] = [
           '#type' => 'textfield',
-          '#value' => $quartalsVal["Qsecond$i"] ?? '',
+          '#value' => $quartalsVal["Qsecond$j$i"] ?? '',
           '#disabled' => TRUE,
         ];
-        $form["wrapper$j"]["Jul$j$i"] = [
+        $form["wrapper"]["Jul$j$i"] = [
           '#type' => 'number',
           '#default_value' => "",
         ];
-        $form["wrapper$j"]["Aug$j$i"] = [
+        $form["wrapper"]["Aug$j$i"] = [
           '#type' => 'number',
           '#default_value' => "",
         ];
-        $form["wrapper$j"]["Sep$j$i"] = [
+        $form["wrapper"]["Sep$j$i"] = [
           '#type' => 'number',
           '#default_value' => "",
         ];
-        $form["wrapper$j"]["Qthird$j$i"] = [
+        $form["wrapper"]["Qthird$j$i"] = [
           '#type' => 'textfield',
-          '#value' => $quartalsVal["Qthird$i"] ?? '',
+          '#value' => $quartalsVal["Qthird$j$i"] ?? '',
           '#disabled' => TRUE,
         ];
-        $form["wrapper$j"]["Oct$j$i"] = [
+        $form["wrapper"]["Oct$j$i"] = [
           '#type' => 'number',
           '#default_value' => "",
         ];
-        $form["wrapper$j"]["Nov$j$i"] = [
+        $form["wrapper"]["Nov$j$i"] = [
           '#type' => 'number',
           '#default_value' => "",
         ];
-        $form["wrapper$j"]["Dec$j$i"] = [
+        $form["wrapper"]["Dec$j$i"] = [
           '#type' => 'number',
           '#default_value' => "",
         ];
-        $form["wrapper$j"]["Qfourth$j$i"] = [
+        $form["wrapper"]["Qfourth$j$i"] = [
           '#type' => 'textfield',
-          '#value' => $quartalsVal["Qfourth$i"] ?? '',
+          '#value' => $quartalsVal["Qfourth$j$i"] ?? '',
           '#disabled' => TRUE,
         ];
-        $form["wrapper$j"]["YTD$j$i"] = [
+        $form["wrapper"]["YTD$j$i"] = [
           '#type' => 'textfield',
           '#value' => $quartalsVal["YTD$j$i"] ?? '',
           '#disabled' => TRUE,
@@ -272,8 +275,7 @@ class CalendarForm extends FormBase {
       '#type' => 'hidden',
       '#value' => $this->tableCount,
     ];
-    $tableCountIndex = $this->tableCount - 1;
-    $form["wrapper$tableCountIndex"]['add'] = [
+    $form["wrapper"]['add'] = [
       '#type' => 'submit',
       '#value' => t('Add year'),
       '#ajax' => [
@@ -281,7 +283,7 @@ class CalendarForm extends FormBase {
         'wrapper'    => 'data-wrapper',
       ],
     ];
-    $form["wrapper$tableCountIndex"]['addTable'] = [
+    $form["wrapper"]['addTable'] = [
       '#type' => 'submit',
       '#value' => t('Add Table'),
       '#ajax' => [
@@ -289,7 +291,7 @@ class CalendarForm extends FormBase {
         'wrapper'    => 'data-wrapper',
       ],
     ];
-    $form["wrapper$tableCountIndex"]['actions']['submit'] = [
+    $form["wrapper"]['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => t('Submit'),
       '#description' => t('Submit, #type = submit'),

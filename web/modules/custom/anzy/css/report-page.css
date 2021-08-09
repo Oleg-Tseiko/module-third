@@ -1,6 +1,9 @@
 #main .clearfix .main-content .table {
   margin-bottom: 0;
 }
+#main .clearfix .main-content .table-responsive {
+  width: 100%;
+}
 .alert {
   margin-top: 1rem;
 }
