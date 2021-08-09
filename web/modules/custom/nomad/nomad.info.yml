@@ -1,0 +1,7 @@
+name: nomad
+type: module
+description: 'This module adding tables with years, months and quarters in order to help user managing his accounting work.'
+package: nomad
+version: 1.0
+core_version_requirement: '^8.8 || ^9'
+configure: nomad.amdin_settings

@@ -1,0 +1,103 @@
+<?php
+
+/**
+ * @file
+ * File for hooks implementing.
+ */
+
+/**
+ * Implementing hook for creating twig markup.
+ */
+function nomad_schema() {
+  $schema['nomad'] = [
+    'description' => "Stores all the information of user's and their contact information also images, avatars, comments",
+    'fields' => [
+      'id' => [
+        'description' => 'The primary identifier for the record.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'Year' => [
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => "User's chosen avatar.",
+      ],
+      'Jan' => [
+        'description' => "User name.",
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ],
+      'Feb' => [
+        'description' => "User's email address.",
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ],
+      'Mar' => [
+        'description' => "User's phone number.",
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ],
+      'Apr' => [
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => 'Timestamp when the current comment was added by user.',
+      ],
+      'May' => [
+        'description' => "Comment that user left.",
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+      ],
+      'Jun' => [
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => "Image that user added.",
+      ],
+      'Jul' => [
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => "Image that user added.",
+      ],
+      'Aug' => [
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => "Image that user added.",
+      ],
+      'Sep' => [
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => "Image that user added.",
+      ],
+      'Oct' => [
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => "Image that user added.",
+      ],
+      'Nov' => [
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => "Image that user added.",
+      ],
+      'Dec' => [
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => 0,
+        'description' => "Image that user added.",
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+  return $schema;
+}

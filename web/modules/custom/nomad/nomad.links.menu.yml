@@ -1,0 +1,6 @@
+nomad.quarter_report:
+  title: 'Accounting table'
+  description: 'Displays tables for easy managing a guarterly report'
+  route_name: nomad.content
+  parent: system.admin_content
+  weight: -100

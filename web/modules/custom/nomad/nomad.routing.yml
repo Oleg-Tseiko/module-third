@@ -1,0 +1,7 @@
+nomad.content:
+  path: '/nomad/accounting_table'
+  defaults:
+    _form: 'Drupal\nomad\Form\Nomadform'
+    _title: 'You can add additional accounting table here.'
+  requirements:
+    _permission: 'access content'
