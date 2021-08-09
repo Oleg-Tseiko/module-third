@@ -31,6 +31,13 @@ class CalendarForm extends FormBase {
   protected $rowsCount = 0;
 
   /**
+   * Contain table number from which validation starts.
+   *
+   * @var rowsIndex
+   */
+  protected $rowIndex = 0;
+
+  /**
    * {@inheritdoc}
    */
   public function getFormId() {
@@ -38,30 +45,73 @@ class CalendarForm extends FormBase {
   }
 
   /**
-   * Validate fields and return a list of fields names which not valid.
+   * Selects from which table is validate first.
    */
-  public function validateMonths(array $monthsValidate) {
+  public function validateFilter(array $monthsFilter) {
     // $count used to correct $theLastOne and $offset, so it would be precise.
     $count = 0;
     // $theLastOne Count how many elements blank after all checked months.
     $theLastOne = 0;
     // $offset is counting how many element blank after first checked month.
     $offset = 0;
+    $sortIndex = 0;
     $fieldsName = [];
-    foreach ($monthsValidate as $month => $number) {
+    foreach ($monthsFilter as $month => $number) {
       if ($number != "") {
+        if ($count == 0) {
+          $sortIndex = $month[3];
+          $this->rowIndex = $sortIndex;
+        }
+        if ($month[3] == $sortIndex) {
+          $fieldsName[$offset] = $month;
+        }
+        elseif ($month[3] != $sortIndex) {
+          break;
+        }
         $count++;
+        $offset++;
         if ($theLastOne != 0) {
           $theLastOne = 0;
         }
       }
       elseif ($count != 0) {
-        $fieldsName[$offset] = $month;
+        if ($month[3] == $sortIndex) {
+          $fieldsName[$offset] = $month;
+        }
         $theLastOne++;
         $offset++;
       }
     }
     $fieldsName = array_slice($fieldsName, 0, $offset - $theLastOne, TRUE);
+    return $fieldsName;
+  }
+
+  /**
+   * Selects from which table is validate first.
+   */
+  public function getFilterValues(array $newVal, array $inputes) {
+    $allMonthsTable = [];
+    for ($c = 0; $c < count($newVal); $c++) {
+      $monthName = substr($newVal[$c], 0, 3);
+      $monthIndex = $newVal[$c];
+      $monthIndex = $monthIndex[4];
+      for ($i = $this->rowIndex; $i != $this->tableCount; $i++) {
+        $allMonthsTable[$monthName . $i . $monthIndex] = $inputes[$monthName . $i . $monthIndex];
+      }
+    }
+    return $allMonthsTable;
+  }
+
+  /**
+   * Validate fields and return a list of fields names which not valid.
+   */
+  public function validateMonths(array $monthsValidate) {
+    $fieldsName = [];
+    foreach ($monthsValidate as $month => $value) {
+      if ($value == "") {
+        $fieldsName[$month] = $month;
+      }
+    }
     return $fieldsName;
   }
 
@@ -145,6 +195,8 @@ class CalendarForm extends FormBase {
           $monthsVal["Dec$j$i"] = $inputes["Dec$j$i"];
         }
       }
+      $monthsVal = $this->validateFilter($monthsVal);
+      $monthsVal = $this->getFilterValues($monthsVal, $inputes);
       $monthsVal = $this->validateMonths($monthsVal);
     }
     if (isset($inputes["_triggering_element_value"]) && empty($monthsVal)) {
@@ -326,7 +378,9 @@ class CalendarForm extends FormBase {
         $monthsVal["Dec$j$i"] = $form_state->getValue("Dec$j$i");
       }
     }
-    $monthsVal = $this->validateMonths($monthsVal);
+    $newVal = $this->validateFilter($monthsVal);
+    $newVal = $this->getFilterValues($newVal, $monthsVal);
+    $monthsVal = $this->validateMonths($newVal);
     if (!empty($monthsVal) && $inputes["_triggering_element_value"] == "Submit") {
       foreach ($monthsVal as $name) {
         $form_state->setErrorByName($name, t('There is a space in report, you need to fix'));
