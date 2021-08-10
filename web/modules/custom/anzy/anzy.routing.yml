@@ -3,4 +3,4 @@ anzy.calendar_form:
   defaults:
     _form: '\Drupal\anzy\Form\CalendarForm'
   requirements:
-   _permission: 'administer nodes'
+   _permission: 'access content'
