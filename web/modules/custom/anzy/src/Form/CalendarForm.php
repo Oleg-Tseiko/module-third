@@ -95,7 +95,7 @@ class CalendarForm extends FormBase {
       $monthName = substr($newVal[$c], 0, 3);
       $monthIndex = $newVal[$c];
       $monthIndex = $monthIndex[4];
-      for ($i = $this->rowIndex; $i != $this->tableCount; $i++) {
+      for ($i = 0; $i != $this->tableCount; $i++) {
         $allMonthsTable[$monthName . $i . $monthIndex] = $inputes[$monthName . $i . $monthIndex];
       }
     }
@@ -105,14 +105,27 @@ class CalendarForm extends FormBase {
   /**
    * Validate fields and return a list of fields names which not valid.
    */
-  public function validateMonths(array $monthsValidate) {
+  public function validateMonths(array $monthsValidate, array $inputes) {
     $fieldsName = [];
+    $inputes = array_filter($inputes);
+    $unnecessaryValues = [];
+    foreach ($inputes as $month => $value) {
+      $counter = 0;
+      foreach ($monthsValidate as $newMonth => $newValue) {
+        if ($month == $newMonth && $newValue != "") {
+          $counter++;
+        }
+      }
+      if ($counter != 1) {
+        $unnecessaryValues[$month] = $month;
+      }
+    }
     foreach ($monthsValidate as $month => $value) {
       if ($value == "") {
         $fieldsName[$month] = $month;
       }
     }
-    return $fieldsName;
+    return array_merge($unnecessaryValues, $fieldsName);
   }
 
   /**
@@ -195,9 +208,9 @@ class CalendarForm extends FormBase {
           $monthsVal["Dec$j$i"] = $inputes["Dec$j$i"];
         }
       }
-      $monthsVal = $this->validateFilter($monthsVal);
-      $monthsVal = $this->getFilterValues($monthsVal, $inputes);
-      $monthsVal = $this->validateMonths($monthsVal);
+      $newVal = $this->validateFilter($monthsVal);
+      $newVal = $this->getFilterValues($newVal, $inputes);
+      $monthsVal = $this->validateMonths($newVal, $monthsVal);
     }
     if (isset($inputes["_triggering_element_value"]) && empty($monthsVal)) {
       if ($inputes["_triggering_element_value"] == "Submit") {
@@ -380,10 +393,10 @@ class CalendarForm extends FormBase {
     }
     $newVal = $this->validateFilter($monthsVal);
     $newVal = $this->getFilterValues($newVal, $monthsVal);
-    $monthsVal = $this->validateMonths($newVal);
+    $monthsVal = $this->validateMonths($newVal, $monthsVal);
     if (!empty($monthsVal) && $inputes["_triggering_element_value"] == "Submit") {
       foreach ($monthsVal as $name) {
-        $form_state->setErrorByName($name, t('There is a space in report, you need to fix'));
+        $form_state->setErrorByName($name, t('There is a mistake in report, you need to fix it.'));
       }
     }
     return $form;
