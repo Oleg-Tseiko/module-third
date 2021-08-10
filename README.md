@@ -1,3 +1,8 @@
+# Project containing custom module
+
+In this project module already enabled with link in main menu, also there is a link under stucrute tab in admin bar. Login: admin Password: admin.
+This module works fine in this current theme and works fine aswell in other themes. But in this theme it's marks fields that doesn't go through validation. Also module looks better in this one.
+
 # Docksal powered Drupal 9 With Composer Installation
 
 This is a sample Drupal 9 with Composer installation pre-configured for use with Docksal.
