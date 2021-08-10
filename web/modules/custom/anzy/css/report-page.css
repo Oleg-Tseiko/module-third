@@ -75,3 +75,56 @@
   padding: 5px;
   float: left;
 }
+/* Bartik css */
+
+#calendar-form .form-item,
+#calendar-form .form-actions {
+  margin-top: 0;
+  margin-bottom: 0;
+  width: 70px;
+  float: left;
+}
+#calendar-formtable tr th,
+#calendar-form table tr th a,
+#calendar-form table tr th a:hover,
+#calendar-form table tr th a:focus {
+  color: #fff;
+  font-weight: bold;
+  width: 50px;
+  margin-bottom: 0!important;
+  float: left;
+  display: block;
+}
+#calendar-form table {
+  width: 100%;
+  margin: 10px 0 0 0;
+  border-spacing: 0;
+  border: 0;
+  border-collapse: collapse;
+  font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, sans-serif;
+  font-size: 0.857em;
+}
+#calendar-form input.form-text,
+#calendar-form input.form-tel,
+#calendar-form input.form-email,
+#calendar-form input.form-url,
+#calendar-form input.form-search,
+#calendar-form input.form-file,
+#calendar-form input.form-number,
+#calendar-form input.form-color,
+#calendar-form textarea.form-textarea {
+  color: #3b3b3b;
+  border: 1px solid #ccc;
+  margin: 0;
+}
+/* Chrome, Safari, Edge, Opera */
+#calendar-form input::-webkit-outer-spin-button,
+#calendar-form input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+#calendar-form input[type=number] {
+  -moz-appearance: textfield;
+}
